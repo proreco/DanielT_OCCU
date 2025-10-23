@@ -10,8 +10,9 @@
 <div class="card mb-4">
     <div class="card-body">
         <h5 class="card-title">Add New Character</h5>
-        <EditForm Model="@newCharacter" OnValidSubmit="@HandleValidSubmit" FormName="addCharacterForm">
+        <EditForm EditContext="@editContext" OnValidSubmit="@HandleValidSubmit" FormName="addCharacterForm">
             <DataAnnotationsValidator />
+            <ValidationSummary />
             <div class="row g-3">
                 <div class="col-md-3">
                     <label for="name" class="form-label">Name</label>
@@ -32,7 +33,15 @@
                 </div>
             </div>
             <div class="mt-3">
+             @if (isEditMode)
+                {
+                    <button type="submit" class="btn btn-warning">Edit Character</button>
+                    <button type="button" class="btn btn-secondary ms-2" @onclick="CancelEdit">Cancel</button>
+                }
+                else
+                {
                 <button type="submit" class="btn btn-primary">Add Character</button>
+                }
             </div>
         </EditForm>
     </div>
@@ -65,13 +74,18 @@
                     <td>@character.catchphrase</td>
                     <td>@character.updatedAt.ToLocalTime()</td>
                     <td>
-                        <button type="button" class="btn btn-danger btn-sm" @onclick="() => DeleteCharacter(character.name)">
-                            Delete
+                        <button type="button" class="btn btn-danger btn-sm" @onclick="() => EditCharacter(character)">
+                            Edit
                         </button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger btn-sm" @onclick="() => CopyCharacter(character)">
                             Copy
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" @onclick="() => DeleteCharacter(character.name)">
+                            Delete
                         </button>
                     </td>
                 </tr>
@@ -81,6 +95,13 @@
 }
 
 @code {
+    private List<DataObject> selectedCharacters = new List<DataObject>(capacity: 2);
+
+    private EditContext editContext;
+    private ValidationMessageStore messageStore;
+    private bool isEditMode = false;
+    private string oldName = string.Empty;
+
     private List<DataObject>? _characters;
     [SupplyParameterFromForm]
     private DataObject? newCharacter {get; set;}
@@ -90,7 +111,14 @@
         ? _characters ?? Enumerable.Empty<DataObject>()
         : _characters?.Where(c => c.name.Contains(searchName, StringComparison.OrdinalIgnoreCase)) ?? Enumerable.Empty<DataObject>();
 
-    protected override void OnInitialized() => newCharacter ??= new();
+    protected override void OnInitialized()
+    { 
+        newCharacter ??= new();
+        editContext = new EditContext(newCharacter);
+        messageStore = new ValidationMessageStore(editContext);
+        editContext.OnValidationRequested += (s, e) => messageStore.Clear();
+        editContext.OnFieldChanged += (s, e) => messageStore.Clear(e.FieldIdentifier);
+    }
     protected override async Task OnInitializedAsync()
     {
         _characters = await DataStorage.LoadData();
@@ -98,7 +126,24 @@
 
     private async Task HandleValidSubmit()
     {
-            if(newCharacter.name != null){
+        messageStore.Clear();
+        if(newCharacter?.name != null || newCharacter?.name != ""){
+            if(isEditMode){
+                if(oldName != newCharacter.name && _characters.Any(c => c.name == newCharacter.name)){
+                    var fieldId = editContext.Field(nameof(newCharacter.name));
+                    messageStore.Add(fieldId, "Name already exists.");
+                    return;
+                }
+                newCharacter.updatedAt = DateTime.Now;
+                Console.WriteLine($"Editing Name: {newCharacter.name}");
+                await DataStorage.UpdateData(oldName, newCharacter);
+                _characters = await DataStorage.LoadData();
+                newCharacter = new();
+                isEditMode = false;
+                oldName = string.Empty;
+                StateHasChanged();
+                return;
+            } else if(!_characters.Any(c => c.name == newCharacter.name)){
                 newCharacter.updatedAt = DateTime.Now;
             Console.WriteLine($"User Name: {newCharacter.name}");
             await DataStorage.AddData(newCharacter);
@@ -106,10 +151,16 @@
             newCharacter = new();
             StateHasChanged();
             } else {
-                Console.WriteLine("Name is required.");
+                var fieldId = editContext.Field(nameof(newCharacter.name));
+                messageStore.Add(fieldId, "Name already exists.");
             }
-        
+        } else {
+            var fieldId = editContext.Field(nameof(newCharacter.name));
+            messageStore.Add(fieldId, "Name is required.");
+        }
     }
+        
+    
 
     private async Task DeleteCharacter(string name)
 {
@@ -130,4 +181,46 @@
     };
         StateHasChanged();
     }
+
+
+    private void EditCharacter(DataObject character)
+    {
+        newCharacter = new DataObject 
+        {
+            name = character.name,
+            characterClass = character.characterClass,
+            favoredWeapon = character.favoredWeapon,
+            catchphrase = character.catchphrase,
+            updatedAt = character.updatedAt
+        };
+        oldName = character.name;
+        isEditMode = true;
+        StateHasChanged();
+    }
+
+    private void CancelEdit()
+    {
+        newCharacter = new DataObject();
+        oldName = string.Empty;
+        isEditMode = false;
+        StateHasChanged();
+    }
+
+    private void OnToggleSelect(ChangeEventArgs e, DataObject character)
+    {
+        bool isChecked = (bool)e.Value;
+
+        if (isChecked)
+        {
+            if (selectedCharacters.Count < 2)
+                selectedCharacters.Add(character);
+        }
+        else
+        {
+            selectedCharacters.Remove(character);
+        }
+    }
+
+    private bool IsDifferent(string? value1, string? value2) =>
+        !string.Equals(value1, value2, StringComparison.Ordinal);
 }

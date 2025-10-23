@@ -22,9 +22,16 @@
   },
   {
     "name": "Legolas",
-    "characterClass": "Archer",
-    "favoredWeapon": "Arrows",
+    "characterClass": "Archers",
+    "favoredWeapon": "Arrowed",
     "catchphrase": "What about as a friend",
-    "updatedAt": "2025-10-22T21:34:36.5893822-07:00"
+    "updatedAt": "2025-10-22T23:15:48.9712086-07:00"
+  },
+  {
+    "name": "Gandalfing",
+    "characterClass": "Wizard",
+    "favoredWeapon": "Wizard",
+    "catchphrase": "Wizard",
+    "updatedAt": "2025-10-22T23:41:24.7005841-07:00"
   }
 ]
