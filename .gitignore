@@ -1,6 +1,7 @@
 ## .NET Core build folders
 bin/
 obj/
+DanielT_OCCU/obj/
 
 ## Visual Studio Code folders and files
 .vscode/
