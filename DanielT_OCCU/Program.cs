@@ -1,10 +1,16 @@
 using DanielT_OCCU.Components;
+using DanielT_OCCU.Data;
+using Microsoft.JSInterop;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Add storage services as singletons
+builder.Services.AddSingleton<DataStorage>();
+builder.Services.AddSingleton<StatusStorage>();
 
 var app = builder.Build();
 

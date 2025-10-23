@@ -1,7 +1,133 @@
 ﻿@page "/"
+@using DanielT_OCCU.Data
+@inject DataStorage DataStorage
+@rendermode InteractiveServer
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Character List</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Character Database</h1>
 
-Welcome to your new app.
+<div class="card mb-4">
+    <div class="card-body">
+        <h5 class="card-title">Add New Character</h5>
+        <EditForm Model="@newCharacter" OnValidSubmit="@HandleValidSubmit" FormName="addCharacterForm">
+            <DataAnnotationsValidator />
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label for="name" class="form-label">Name</label>
+                    <InputText id="name" class="form-control" @bind-Value="newCharacter.name" />
+                    <ValidationMessage For="@(() => newCharacter.name)" />
+                </div>
+                <div class="col-md-3">
+                    <label for="class" class="form-label">Class</label>
+                    <InputText id="class" class="form-control" @bind-Value="newCharacter.characterClass" />
+                </div>
+                <div class="col-md-3">
+                    <label for="weapon" class="form-label">Weapon</label>
+                    <InputText id="weapon" class="form-control" @bind-Value="newCharacter.favoredWeapon" />
+                </div>
+                <div class="col-md-3">
+                    <label for="catchphrase" class="form-label">Catchphrase</label>
+                    <InputText id="catchphrase" class="form-control" @bind-Value="newCharacter.catchphrase" />
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-primary">Add Character</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@if (_characters != null)
+{
+    <div class="mb-3">
+        <div class="col-3">
+            <input type="text" class="form-control" placeholder="Search by Name..." @bind="searchName" @bind:event="oninput" />
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Weapon</th>
+                <th>Catchphrase</th>
+                <th>Last Updated</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var character in filteredCharacters)
+            {
+                <tr>
+                    <td>@character.name</td>
+                    <td>@character.characterClass</td>
+                    <td>@character.favoredWeapon</td>
+                    <td>@character.catchphrase</td>
+                    <td>@character.updatedAt.ToLocalTime()</td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" @onclick="() => DeleteCharacter(character.name)">
+                            Delete
+                        </button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger btn-sm" @onclick="() => CopyCharacter(character)">
+                            Copy
+                        </button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<DataObject>? _characters;
+    [SupplyParameterFromForm]
+    private DataObject? newCharacter {get; set;}
+    private string? searchName = string.Empty;
+    private IEnumerable<DataObject> filteredCharacters =>
+    string.IsNullOrWhiteSpace(searchName)
+        ? _characters ?? Enumerable.Empty<DataObject>()
+        : _characters?.Where(c => c.name.Contains(searchName, StringComparison.OrdinalIgnoreCase)) ?? Enumerable.Empty<DataObject>();
+
+    protected override void OnInitialized() => newCharacter ??= new();
+    protected override async Task OnInitializedAsync()
+    {
+        _characters = await DataStorage.LoadData();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+            if(newCharacter.name != null){
+                newCharacter.updatedAt = DateTime.Now;
+            Console.WriteLine($"User Name: {newCharacter.name}");
+            await DataStorage.AddData(newCharacter);
+            _characters = await DataStorage.LoadData();
+            newCharacter = new();
+            StateHasChanged();
+            } else {
+                Console.WriteLine("Name is required.");
+            }
+        
+    }
+
+    private async Task DeleteCharacter(string name)
+{
+    Console.WriteLine($"Deleting Name: {name}");
+    await DataStorage.DeleteData(name);
+    _characters = await DataStorage.LoadData();
+    StateHasChanged();
+}
+    private void CopyCharacter(DataObject character)
+    {
+        newCharacter = new DataObject 
+    {
+        name = character.name,
+        characterClass = character.characterClass,
+        favoredWeapon = character.favoredWeapon,
+        catchphrase = character.catchphrase,
+        updatedAt = character.updatedAt
+    };
+        StateHasChanged();
+    }
+}

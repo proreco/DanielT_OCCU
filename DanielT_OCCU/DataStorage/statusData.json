@@ -1,0 +1,150 @@
+[
+  {
+    "status": 2,
+    "message": "Character creation successful"
+  },
+  {
+    "status": 2,
+    "message": "Updated character successfully"
+  },
+  {
+    "status": 2,
+    "message": "Deleted character successfully"
+  },
+  {
+    "status": 2,
+    "message": "Loaded character data successfully"
+  },
+  {
+    "status": 2,
+    "message": "Loaded all characters successfully"
+  },
+  {
+    "status": 2,
+    "message": "Saved all characters successfully"
+  },
+  {
+    "status": 2,
+    "message": "Characters are a match"
+  },
+  {
+    "status": 1,
+    "message": "Character name already exists"
+  },
+  {
+    "status": 1,
+    "message": "Low health warning"
+  },
+  {
+    "status": 1,
+    "message": "Long name warning"
+  },
+  {
+    "status": 1,
+    "message": "Bad catchphrase warning"
+  },
+  {
+    "status": 1,
+    "message": "Broken weapon warning"
+  },
+  {
+    "status": 1,
+    "message": "Offensive name warning"
+  },
+  {
+    "status": 1,
+    "message": "Weapon needs maintenance"
+  },
+  {
+    "status": 1,
+    "message": "Stamina running low"
+  },
+  {
+    "status": 1,
+    "message": "Magic power depleting"
+  },
+  {
+    "status": 1,
+    "message": "Character level below recommended"
+  },
+  {
+    "status": 1,
+    "message": "Skills need training"
+  },
+  {
+    "status": 1,
+    "message": "Quest time limit approaching"
+  },
+  {
+    "status": 1,
+    "message": "Faction reputation declining"
+  },
+  {
+    "status": 1,
+    "message": "Equipment incompatible with class"
+  },
+  {
+    "status": 1,
+    "message": "Companion loyalty wavering"
+  },
+  {
+    "status": 1,
+    "message": "Guild membership at risk"
+  },
+  {
+    "status": 1,
+    "message": "Low health warning"
+  },
+  {
+    "status": 1,
+    "message": "One hit remaining warning"
+  },
+  {
+    "status": 1,
+    "message": "Bad joke warning"
+  },
+  {
+    "status": 0,
+    "message": "Invalid character class selected"
+  },
+  {
+    "status": 2,
+    "message": "Quest completed successfully"
+  },
+  {
+    "status": 0,
+    "message": "Character file corrupted"
+  },
+  {
+    "status": 0,
+    "message": "Database connection failed"
+  },
+  {
+    "status": 0,
+    "message": "Character creation failed"
+  },
+  {
+    "status": 0,
+    "message": "Update character failed"
+  },
+  {
+    "status": 0,
+    "message": "Delete character failed"
+  },
+  {
+    "status": 0,
+    "message": "Load character data failed"
+  },
+  {
+    "status": 0,
+    "message": "Load all characters failed"
+  },
+  {
+    "status": 0,
+    "message": "Save all characters failed"
+  },
+  {
+    "status": 0,
+    "message": "Character to match not found"
+  }
+]

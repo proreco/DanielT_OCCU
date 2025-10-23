@@ -1,0 +1,48 @@
+﻿@page "/statuses"
+@using DanielT_OCCU.Data
+@inject StatusStorage StatusStorage
+@attribute [StreamRendering]
+
+<PageTitle>Status Messages</PageTitle>
+
+<h1>Status Messages</h1>
+
+<p>This component displays all stored status messages.</p>
+
+@if (_statuses == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var status in _statuses)
+        {
+            <div class="col">
+                <div class="card h-100 @GetCardClass(status.status)">
+                    <div class="card-body">
+                        <p class="card-text fs-4 mb-2">@status.message</p>
+                        <small class="text-muted">Status: @status.status.ToString()</small>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<StatusObject>? _statuses;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _statuses = await StatusStorage.LoadStatuses();
+    }
+
+    private string GetCardClass(StatusType status) => status switch
+    {
+        StatusType.Pass => "border-success bg-success bg-opacity-10",
+        StatusType.Warn => "border-warning bg-warning bg-opacity-10",
+        StatusType.Fail => "border-danger bg-danger bg-opacity-10",
+        _ => "border-secondary bg-secondary bg-opacity-10"
+    };
+}
