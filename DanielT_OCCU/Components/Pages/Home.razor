@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using DanielT_OCCU.Data
+@using DanielT_OCCU.Shared
 @inject DataStorage DataStorage
 @rendermode InteractiveServer
 
@@ -70,9 +71,9 @@
             {
                 <tr>
                     <td>@character.Name</td>
-                    <td>@if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => c.Name == character.Name)){
+                    <td>@if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, character.Name))){
                         <span
-                            class="@(IsDifferent(selectedCharacters[0].CharacterClass, selectedCharacters[1].CharacterClass) ? "highlight" : "")">
+                            class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].CharacterClass, selectedCharacters[1].CharacterClass) ? "highlight" : "")">
                             @character.CharacterClass
                         </span>
                     } else
@@ -82,7 +83,7 @@
                 </td>
                 <td>@if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => c.Name == character.Name)){
                     <span
-                        class="@(IsDifferent(selectedCharacters[0].FavoredWeapon, selectedCharacters[1].FavoredWeapon) ? "highlight" : "")">
+                        class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].FavoredWeapon, selectedCharacters[1].FavoredWeapon) ? "highlight" : "")">
                         @character.FavoredWeapon
                     </span>
                 }
@@ -92,10 +93,10 @@
                 }
             </td>
             <td>
-                @if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => c.Name == character.Name))
+                @if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, character.Name)))
                 {
                     <span
-                        class="@(IsDifferent(selectedCharacters[0].Catchphrase, selectedCharacters[1].Catchphrase) ? "highlight" : "")">
+                        class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].Catchphrase, selectedCharacters[1].Catchphrase) ? "highlight" : "")">
                         @character.Catchphrase
                     </span>
                 }
@@ -106,9 +107,9 @@
             </td>
             <td>@character.UpdatedAt.ToLocalTime()</td>
             <td>
-                <input type="checkbox" checked="@selectedCharacters.Any(c => c.Name == character.Name)"
+                <input type="checkbox" checked="@selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, character.Name))"
                     @onchange="e => OnToggleSelect(e, character)"
-                    disabled="@(selectedCharacters.Count >= 2 && !selectedCharacters.Any(c => c.Name == character.Name))" />
+                    disabled="@(selectedCharacters.Count >= 2 && !selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, character.Name)))" />
             </td>
             <td>
                 <button type="button" class="btn btn-danger btn-sm" @onclick="() => EditCharacter(character)">
@@ -174,15 +175,15 @@
         {
             if (isEditMode)
             {
-                if (oldName != newCharacter.Name && _characters.Any(c => c.Name == newCharacter.Name))
+                if (oldName != newCharacter.Name && _characters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, newCharacter.Name)))
                 {
                     var fieldId = editContext.Field(nameof(newCharacter.Name));
                     messageStore.Add(fieldId, "Name already exists.");
                     return;
                 }
-                if (selectedCharacters.Any(c => c.Name == oldName))
+                if (selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, oldName)))
                 {
-                    selectedCharacters.RemoveAll(c => c.Name == oldName);
+                    selectedCharacters.RemoveAll(c => ComparisonUtils.EqualsIgnoreCase(c.Name, oldName));
                     selectedCharacters.Add(newCharacter);
                 }
                 newCharacter.UpdatedAt = DateTime.Now;
@@ -195,7 +196,7 @@
                 StateHasChanged();
                 return;
             }
-            else if (!_characters.Any(c => c.Name == newCharacter.Name))
+            else if (!_characters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, newCharacter.Name)))
             {
                 newCharacter.UpdatedAt = DateTime.Now;
                 Console.WriteLine($"User Name: {newCharacter.Name}");
@@ -218,13 +219,12 @@
     }
 
 
-
     private async Task DeleteCharacter(string name)
     {
         Console.WriteLine($"Deleting Name: {name}");
-        if (selectedCharacters.Any(c => c.Name == name))
+        if (selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, name)))
         {
-            selectedCharacters.RemoveAll(c => c.Name == name);
+            selectedCharacters.RemoveAll(c => ComparisonUtils.EqualsIgnoreCase(c.Name, name));
         }
         await DataStorage.DeleteData(name);
         _characters = await DataStorage.LoadData();
@@ -232,28 +232,15 @@
     }
     private void CopyCharacter(DataObject character)
     {
-        newCharacter = new DataObject
-        {
-            Name = character.Name,
-            CharacterClass = character.CharacterClass,
-            FavoredWeapon = character.FavoredWeapon,
-            Catchphrase = character.Catchphrase,
-            UpdatedAt = character.UpdatedAt
-        };
+        newCharacter = new DataObject(character);
+        messageStore.Clear();
         StateHasChanged();
     }
 
 
     private void EditCharacter(DataObject character)
     {
-        newCharacter = new DataObject
-        {
-            Name = character.Name,
-            CharacterClass = character.CharacterClass,
-            FavoredWeapon = character.FavoredWeapon,
-            Catchphrase = character.Catchphrase,
-            UpdatedAt = character.UpdatedAt
-        };
+        newCharacter = new DataObject(character);
         oldName = character.Name;
         isEditMode = true;
         StateHasChanged();
@@ -277,10 +264,7 @@
         }
         else
         {
-            selectedCharacters.RemoveAll(c => c.Name == character.Name);
+            selectedCharacters.RemoveAll(c => ComparisonUtils.EqualsIgnoreCase(c.Name, character.Name));
         }
     }
-
-    private bool IsDifferent(string? value1, string? value2) =>
-    !string.Equals(value1, value2, StringComparison.Ordinal);
 }

@@ -1,150 +1,150 @@
 [
   {
-    "status": 2,
-    "message": "Character creation successful"
+    "Status": 2,
+    "Message": "Character creation successful"
   },
   {
-    "status": 2,
-    "message": "Updated character successfully"
+    "Status": 2,
+    "Message": "Updated character successfully"
   },
   {
-    "status": 2,
-    "message": "Deleted character successfully"
+    "Status": 2,
+    "Message": "Deleted character successfully"
   },
   {
-    "status": 2,
-    "message": "Loaded character data successfully"
+    "Status": 2,
+    "Message": "Loaded character data successfully"
   },
   {
-    "status": 2,
-    "message": "Loaded all characters successfully"
+    "Status": 2,
+    "Message": "Loaded all characters successfully"
   },
   {
-    "status": 2,
-    "message": "Saved all characters successfully"
+    "Status": 2,
+    "Message": "Saved all characters successfully"
   },
   {
-    "status": 2,
-    "message": "Characters are a match"
+    "Status": 2,
+    "Message": "Characters are a match"
   },
   {
-    "status": 1,
-    "message": "Character name already exists"
+    "Status": 1,
+    "Message": "Character name already exists"
   },
   {
-    "status": 1,
-    "message": "Low health warning"
+    "Status": 1,
+    "Message": "Low health warning"
   },
   {
-    "status": 1,
-    "message": "Long name warning"
+    "Status": 1,
+    "Message": "Long name warning"
   },
   {
-    "status": 1,
-    "message": "Bad catchphrase warning"
+    "Status": 1,
+    "Message": "Bad catchphrase warning"
   },
   {
-    "status": 1,
-    "message": "Broken weapon warning"
+    "Status": 1,
+    "Message": "Broken weapon warning"
   },
   {
-    "status": 1,
-    "message": "Offensive name warning"
+    "Status": 1,
+    "Message": "Offensive name warning"
   },
   {
-    "status": 1,
-    "message": "Weapon needs maintenance"
+    "Status": 1,
+    "Message": "Weapon needs maintenance"
   },
   {
-    "status": 1,
-    "message": "Stamina running low"
+    "Status": 1,
+    "Message": "Stamina running low"
   },
   {
-    "status": 1,
-    "message": "Magic power depleting"
+    "Status": 1,
+    "Message": "Magic power depleting"
   },
   {
-    "status": 1,
-    "message": "Character level below recommended"
+    "Status": 1,
+    "Message": "Character level below recommended"
   },
   {
-    "status": 1,
-    "message": "Skills need training"
+    "Status": 1,
+    "Message": "Skills need training"
   },
   {
-    "status": 1,
-    "message": "Quest time limit approaching"
+    "Status": 1,
+    "Message": "Quest time limit approaching"
   },
   {
-    "status": 1,
-    "message": "Faction reputation declining"
+    "Status": 1,
+    "Message": "Faction reputation declining"
   },
   {
-    "status": 1,
-    "message": "Equipment incompatible with class"
+    "Status": 1,
+    "Message": "Equipment incompatible with class"
   },
   {
-    "status": 1,
-    "message": "Companion loyalty wavering"
+    "Status": 1,
+    "Message": "Companion loyalty wavering"
   },
   {
-    "status": 1,
-    "message": "Guild membership at risk"
+    "Status": 1,
+    "Message": "Guild membership at risk"
   },
   {
-    "status": 1,
-    "message": "Low health warning"
+    "Status": 1,
+    "Message": "Low health warning"
   },
   {
-    "status": 1,
-    "message": "One hit remaining warning"
+    "Status": 1,
+    "Message": "One hit remaining warning"
   },
   {
-    "status": 1,
-    "message": "Bad joke warning"
+    "Status": 1,
+    "Message": "Bad joke warning"
   },
   {
-    "status": 0,
-    "message": "Invalid character class selected"
+    "Status": 0,
+    "Message": "Invalid character class selected"
   },
   {
-    "status": 2,
-    "message": "Quest completed successfully"
+    "Status": 2,
+    "Message": "Quest completed successfully"
   },
   {
-    "status": 0,
-    "message": "Character file corrupted"
+    "Status": 0,
+    "Message": "Character file corrupted"
   },
   {
-    "status": 0,
-    "message": "Database connection failed"
+    "Status": 0,
+    "Message": "Database connection failed"
   },
   {
-    "status": 0,
-    "message": "Character creation failed"
+    "Status": 0,
+    "Message": "Character creation failed"
   },
   {
-    "status": 0,
-    "message": "Update character failed"
+    "Status": 0,
+    "Message": "Update character failed"
   },
   {
-    "status": 0,
-    "message": "Delete character failed"
+    "Status": 0,
+    "Message": "Delete character failed"
   },
   {
-    "status": 0,
-    "message": "Load character data failed"
+    "Status": 0,
+    "Message": "Load character data failed"
   },
   {
-    "status": 0,
-    "message": "Load all characters failed"
+    "Status": 0,
+    "Message": "Load all characters failed"
   },
   {
-    "status": 0,
-    "message": "Save all characters failed"
+    "Status": 0,
+    "Message": "Save all characters failed"
   },
   {
-    "status": 0,
-    "message": "Character to match not found"
+    "Status": 0,
+    "Message": "Character to match not found"
   }
 ]

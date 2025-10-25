@@ -1,4 +1,3 @@
-// File: DanielT_OCCU/Data/StatusStorage.cs
 namespace DanielT_OCCU.Data
 {
     public class StatusStorage : JsonFileRepository<StatusObject>

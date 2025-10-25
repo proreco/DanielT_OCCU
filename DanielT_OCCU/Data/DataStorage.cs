@@ -1,4 +1,3 @@
-// File: DanielT_OCCU/Data/DataStorage.cs
 namespace DanielT_OCCU.Data
 {
     public class DataStorage : JsonFileRepository<DataObject>
@@ -20,7 +19,6 @@ namespace DanielT_OCCU.Data
             existingItem.UpdatedAt = DateTime.Now;
         }
 
-        // Convenience methods with specific signatures for backward compatibility
         public async Task<bool> AddData(DataObject newData)
         {
             return await AddAsync(newData);

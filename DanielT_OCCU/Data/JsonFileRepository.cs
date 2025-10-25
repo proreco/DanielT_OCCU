@@ -1,4 +1,3 @@
-// File: DanielT_OCCU/Data/JsonFileRepository.cs
 using System.Text.Json;
 
 namespace DanielT_OCCU.Data

@@ -10,7 +10,7 @@ This project is part of my application for the Senior Software Developer positio
 4. Run `dotnet run` to start the application
 
 ## Features
-- The Main page will display and allow editing a list of data objects
+- The Main page will display a list of character objects. It implements creating, reading, updating, deleting, and filtering.
 - The Status page will display a list of status objects
 - JSON-based storage system
 
