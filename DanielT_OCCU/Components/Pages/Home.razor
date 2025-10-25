@@ -73,7 +73,7 @@
                     <td>@character.Name</td>
                     <td>@if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, character.Name))){
                         <span
-                            class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].CharacterClass, selectedCharacters[1].CharacterClass) ? "highlight" : "")">
+                            class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].CharacterClass, selectedCharacters[1].CharacterClass) ? "highlight" : "highlight-green")">
                             @character.CharacterClass
                         </span>
                     } else
@@ -83,7 +83,7 @@
                 </td>
                 <td>@if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => c.Name == character.Name)){
                     <span
-                        class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].FavoredWeapon, selectedCharacters[1].FavoredWeapon) ? "highlight" : "")">
+                        class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].FavoredWeapon, selectedCharacters[1].FavoredWeapon) ? "highlight" : "highlight-green")">
                         @character.FavoredWeapon
                     </span>
                 }
@@ -96,7 +96,7 @@
                 @if (selectedCharacters.Count == 2 && selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, character.Name)))
                 {
                     <span
-                        class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].Catchphrase, selectedCharacters[1].Catchphrase) ? "highlight" : "")">
+                        class="@(ComparisonUtils.IsDifferent(selectedCharacters[0].Catchphrase, selectedCharacters[1].Catchphrase) ? "highlight" : "highlight-green")">
                         @character.Catchphrase
                     </span>
                 }

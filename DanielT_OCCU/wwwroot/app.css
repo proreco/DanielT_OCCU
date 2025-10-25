@@ -17,7 +17,11 @@ a, .btn-link {
 }
 
 .highlight {
-    background-color: yellow;
+    background-color: lightsalmon;
+}
+
+.highlight-green {
+    background-color: lightgreen;
 }
 
 .content {
