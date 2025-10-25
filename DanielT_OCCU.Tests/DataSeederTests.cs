@@ -30,19 +30,19 @@ namespace DanielT_OCCU.Tests
             {
                 new DataObject 
                 { 
-                    name = "Gandalf", 
-                    characterClass = "Wizard",
-                    favoredWeapon = "Staff",
-                    catchphrase = "You shall not pass!",
-                    updatedAt = DateTime.Now
+                    Name = "Gandalf", 
+                    CharacterClass = "Wizard",
+                    FavoredWeapon = "Staff",
+                    Catchphrase = "You shall not pass!",
+                    UpdatedAt = DateTime.Now
                 },
                 new DataObject 
                 { 
-                    name = "Aragorn", 
-                    characterClass = "Ranger",
-                    favoredWeapon = "Sword",
-                    catchphrase = "For Frodo",
-                    updatedAt = DateTime.Now
+                    Name = "Aragorn", 
+                    CharacterClass = "Ranger",
+                    FavoredWeapon = "Sword",
+                    Catchphrase = "For Frodo",
+                    UpdatedAt = DateTime.Now
                 }
             };
 
@@ -50,13 +50,13 @@ namespace DanielT_OCCU.Tests
             {
                 new StatusObject 
                 { 
-                    status = StatusType.Pass,
-                    message = "Character creation successful"
+                    Status = StatusType.Pass,
+                    Message = "Character creation successful"
                 },
                 new StatusObject 
                 { 
-                    status = StatusType.Warn,
-                    message = "Low health warning"
+                    Status = StatusType.Warn,
+                    Message = "Low health warning"
                 }
             };
 
@@ -72,8 +72,8 @@ namespace DanielT_OCCU.Tests
 
             Assert.Equal(2, loadedCharacters.Count);
             Assert.Equal(2, loadedStatuses.Count);
-            Assert.Contains(loadedCharacters, c => c.name == "Gandalf");
-            Assert.Contains(loadedStatuses, s => s.message == "Low health warning");
+            Assert.Contains(loadedCharacters, c => c.Name == "Gandalf");
+            Assert.Contains(loadedStatuses, s => s.Message == "Low health warning");
         }
 
         public void Dispose()

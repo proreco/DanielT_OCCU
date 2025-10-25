@@ -19,10 +19,10 @@ else
         @foreach (var status in _statuses)
         {
             <div class="col">
-                <div class="card h-100 @GetCardClass(status.status)">
+                <div class="card h-100 @GetCardClass(status.Status)">
                     <div class="card-body">
-                        <p class="card-text fs-4 mb-2">@status.message</p>
-                        <small class="text-muted">Status: @status.status.ToString()</small>
+                        <p class="card-text fs-4 mb-2">@status.Message</p>
+                        <small class="text-muted">Status: @status.Status.ToString()</small>
                     </div>
                 </div>
             </div>

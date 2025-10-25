@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Gandalf",
+    "characterClass": "Wizard",
+    "favoredWeapon": "Staff",
+    "catchphrase": "You shall not pass!",
+    "updatedAt": "2025-10-22T17:19:00.3931191-07:00"
+  },
+  {
+    "name": "Aragorn",
+    "characterClass": "Ranger",
+    "favoredWeapon": "Sword",
+    "catchphrase": "For Frodo",
+    "updatedAt": "2025-10-22T17:19:00.3931453-07:00"
+  },
+  {
+    "name": "John Wick",
+    "characterClass": "fighter",
+    "favoredWeapon": "Pistols",
+    "catchphrase": "nunya",
+    "updatedAt": "2025-10-22T21:32:25.4148544-07:00"
+  },
+  {
+    "name": "Legolas",
+    "characterClass": "Archers",
+    "favoredWeapon": "Bow and Arrow",
+    "catchphrase": "What about as a friend",
+    "updatedAt": "2025-10-22T23:49:32.14641-07:00"
+  },
+  {
+    "name": "nobodied",
+    "characterClass": "nothing",
+    "favoredWeapon": "never",
+    "catchphrase": "yups",
+    "updatedAt": "2025-10-23T21:40:00.5591374-07:00"
+  },
+  {
+    "name": "wefwef",
+    "characterClass": "wefwef",
+    "favoredWeapon": "wfwef",
+    "catchphrase": "wefewfw",
+    "updatedAt": "2025-10-23T21:44:00.3797275-07:00"
+  },
+  {
+    "name": "lols",
+    "characterClass": "wefwef",
+    "favoredWeapon": "wfwef",
+    "catchphrase": "wefewfw",
+    "updatedAt": "2025-10-23T21:44:07.2366231-07:00"
+  },
+  {
+    "name": "ddweb",
+    "characterClass": "qwd",
+    "favoredWeapon": "qwd",
+    "catchphrase": "qwd",
+    "updatedAt": "2025-10-24T18:50:18.2768381-07:00"
+  },
+  {
+    "name": "Saruman",
+    "characterClass": "Wizard",
+    "favoredWeapon": "orb",
+    "catchphrase": "yolo",
+    "updatedAt": "2025-10-24T18:24:02.1066586-07:00"
+  },
+  {
+    "name": "Gandalfffee",
+    "characterClass": "Wizardffee",
+    "favoredWeapon": "Stafffffee",
+    "catchphrase": "You shall not pass!fffee",
+    "updatedAt": "2025-10-24T18:24:22.6322572-07:00"
+  },
+  {
+    "name": "newupdate",
+    "characterClass": "test1",
+    "favoredWeapon": "test2",
+    "catchphrase": "test3",
+    "updatedAt": "2025-10-24T18:49:47.5055663-07:00"
+  },
+  {
+    "name": "newupdates",
+    "characterClass": "test1",
+    "favoredWeapon": "test2",
+    "catchphrase": "test3",
+    "updatedAt": "2025-10-24T18:50:04.4017161-07:00"
+  }
+]

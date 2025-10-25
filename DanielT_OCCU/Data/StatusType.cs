@@ -4,6 +4,6 @@ namespace DanielT_OCCU.Data
     {
         Fail,
         Warn,
-        Pass
+        Pass,
     }
 }

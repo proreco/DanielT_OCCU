@@ -5,15 +5,15 @@ namespace DanielT_OCCU.Data
     public class DataObject
     {
         [Required(ErrorMessage = "Name is required")]
-        public string name { get; set; } = string.Empty;
-        public string? characterClass { get; set; }
-        public string? favoredWeapon { get; set; }
-        public string? catchphrase { get; set; }
-        public DateTime updatedAt { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string? CharacterClass { get; set; }
+        public string? FavoredWeapon { get; set; }
+        public string? Catchphrase { get; set; }
+        public DateTime UpdatedAt { get; set; }
 
         public DataObject()
         {
-            updatedAt = DateTime.Now;
+            UpdatedAt = DateTime.Now;
         }
     }
 }
