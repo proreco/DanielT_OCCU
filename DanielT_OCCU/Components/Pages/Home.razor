@@ -146,10 +146,7 @@
     private DataObject? newCharacter { get; set; }
     private string? searchName = string.Empty;
     private IEnumerable<DataObject> filteredCharacters =>
-    string.IsNullOrWhiteSpace(searchName)
-    ? _characters ?? Enumerable.Empty<DataObject>()
-    : _characters?.Where(c => c.Name.Contains(searchName, StringComparison.OrdinalIgnoreCase)) ??
-    Enumerable.Empty<DataObject>();
+        SearchUtils.FilterCharacters(_characters, searchName);
 
     protected override void OnInitialized()
     {
@@ -168,54 +165,66 @@
         _characters = await DataStorage.LoadData();
     }
 
-    private async Task HandleValidSubmit()
+    private bool SubmissionValidation()
     {
         messageStore.Clear();
-        if (string.IsNullOrWhiteSpace(newCharacter?.Name) == false)
-        {
-            if (isEditMode)
-            {
-                if (oldName != newCharacter.Name && _characters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, newCharacter.Name)))
-                {
-                    var fieldId = editContext.Field(nameof(newCharacter.Name));
-                    messageStore.Add(fieldId, "Name already exists.");
-                    return;
-                }
-                if (selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, oldName)))
-                {
-                    selectedCharacters.RemoveAll(c => ComparisonUtils.EqualsIgnoreCase(c.Name, oldName));
-                    selectedCharacters.Add(newCharacter);
-                }
-                newCharacter.UpdatedAt = DateTime.Now;
-                Console.WriteLine($"Editing Name: {newCharacter.Name}");
-                await DataStorage.UpdateData(oldName, newCharacter);
-                _characters = await DataStorage.LoadData();
-                newCharacter = new();
-                isEditMode = false;
-                oldName = string.Empty;
-                StateHasChanged();
-                return;
-            }
-            else if (!_characters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, newCharacter.Name)))
-            {
-                newCharacter.UpdatedAt = DateTime.Now;
-                Console.WriteLine($"User Name: {newCharacter.Name}");
-                await DataStorage.AddData(newCharacter);
-                _characters = await DataStorage.LoadData();
-                newCharacter = new();
-                StateHasChanged();
-            }
-            else
-            {
-                var fieldId = editContext.Field(nameof(newCharacter.Name));
-                messageStore.Add(fieldId, "Name already exists.");
-            }
-        }
-        else
+        bool isValid = true;
+        if (string.IsNullOrWhiteSpace(newCharacter?.Name))
         {
             var fieldId = editContext.Field(nameof(newCharacter.Name));
             messageStore.Add(fieldId, "Name is required.");
+            isValid = false;
+        } else if (isEditMode)
+        {
+            if (oldName != newCharacter.Name && _characters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, newCharacter.Name)))
+                {
+                    var fieldId = editContext.Field(nameof(newCharacter.Name));
+                    messageStore.Add(fieldId, "Name already exists.");
+                    isValid = false;
+                }
+        } else
+        {
+            if (_characters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, newCharacter.Name)))
+            {
+                var fieldId = editContext.Field(nameof(newCharacter.Name));
+                messageStore.Add(fieldId, "Name already exists.");
+                isValid = false;
+            }
         }
+        editContext.NotifyValidationStateChanged();
+        return isValid;
+    }
+    private async Task HandleValidSubmit()
+    {
+        bool isValid = SubmissionValidation();
+        if (!isValid)
+            return;
+        if (isEditMode)
+        {
+            if (selectedCharacters.Any(c => ComparisonUtils.EqualsIgnoreCase(c.Name, oldName)))
+            {
+                selectedCharacters.RemoveAll(c => ComparisonUtils.EqualsIgnoreCase(c.Name, oldName));
+                selectedCharacters.Add(newCharacter);
+            }
+            newCharacter.UpdatedAt = DateTime.Now;
+            Console.WriteLine($"Editing Name: {newCharacter.Name}");
+            await DataStorage.UpdateData(oldName, newCharacter);
+            _characters = await DataStorage.LoadData();
+            newCharacter = new();
+            isEditMode = false;
+            oldName = string.Empty;
+            StateHasChanged();
+            return;
+        }
+        else 
+        {
+            newCharacter.UpdatedAt = DateTime.Now;
+            Console.WriteLine($"User Name: {newCharacter.Name}");
+            await DataStorage.AddData(newCharacter);
+            _characters = await DataStorage.LoadData();
+            newCharacter = new();
+            StateHasChanged();
+        } 
     }
 
 
